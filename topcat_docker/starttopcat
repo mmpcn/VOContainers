@@ -1,0 +1,6 @@
+#!/bin/sh
+hostname=$(hostname)
+SAMP_HUB=std-lockurl:file://localhost/root/.samp_$hostname
+export SAMP_HUB
+#bin/topcat -Djsamp.localhost=${hostname} -hub
+bin/topcat -Djsamp.localhost=${hostname} -exthub

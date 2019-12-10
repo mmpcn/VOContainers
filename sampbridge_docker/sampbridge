@@ -1,0 +1,19 @@
+#!/bin/sh
+
+homedir="/root"
+prefix="${homedir}/.samp_"
+sampfiles=""
+for sampfile in $prefix*; do
+    contname="${sampfile##$prefix}"
+    if ping -c1 -W1 ${contname} >/dev/null 2>&1 ;
+    then
+    	echo "${contname} responding"
+	sampfiles="${sampfiles} -sampfile ${sampfile}"
+    else 
+	echo "${contname} nonresponding - removing"
+	rm $sampfile
+    fi
+    echo $sampfiles
+done
+java -jar bin/jsamp.jar bridge -nostandard $sampfiles
+
