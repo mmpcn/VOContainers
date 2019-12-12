@@ -25,30 +25,28 @@ To build the containers:
 To make the GUI run (in a Mac. Needs info/testing for Linux and Windows):
 
 install XQuartz
-
-install scout
-
-run socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:"$DISPLAY"
+Open XQuartz Preferences -> Security, check ‘Allow connections from network clients’
+type xhost + 127.0.0.1
 
 
 To be able to access files from and save to the host machine (config, datafiles to open, ...)
 
-	mkdir <path-to-splathome>
+	mkdir <path-to-common-directory>
 
 put data you want to access there; from the container, save data in /root/
 
 How to run SPLAT, TOPCAT in Docker:
 
- To communicate using SAMP, they need to be in the same network:
+To communicate using SAMP, they need to be in the same networki (needs to be done only once):
 
 	docker network create samp-network
 
 Run SPLAT, TOPCAT in this network
 
-	docker run -v /tmp/.X11-unix:/tmp/.X11-unix -v path-to-splathome:/root -e DISPLAY=$(ipconfig getifaddr en0):0  --network samp-network -t mmpcn/splat:splat
+	docker run -v <path-to-common-directory>:/root  --network samp-network -t mmpcn/splat:splat
 
-	docker run -v /tmp/.X11-unix:/tmp/.X11-unix -v path-to-splathome:/root -e DISPLAY=$(ipconfig getifaddr en0):0 --network samp-network -t mmpcn/splat:topcat
+	docker run -v <path-to-common-directory>:/root  --network samp-network -t mmpcn/splat:topcat
 
  Run sampbridge container in same network (it has to be started after Topcat and SPLAT):
 
-	docker run -v /tmp/.X11-unix:/tmp/.X11-unix -v path-to-splathome:/root -e DISPLAY=$(ipconfig getifaddr en0):0 --network samp-network -t mmpcn/splat:sampbridge
+	docker run -v <path-to-common-directory>:/root --network samp-network -t mmpcn/splat:sampbridge
