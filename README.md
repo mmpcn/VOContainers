@@ -26,7 +26,8 @@ To make the GUI run (in a Mac. Needs info/testing for Linux and Windows):
 
 install XQuartz
 Open XQuartz Preferences -> Security, check ‘Allow connections from network clients’
-type xhost + 127.0.0.1
+type 
+        xhost + 127.0.0.1
 
 
 To be able to access files from and save to the host machine (config, datafiles to open, ...)
