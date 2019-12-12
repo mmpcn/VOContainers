@@ -26,7 +26,9 @@ To make the GUI run (in a Mac. Needs info/testing for Linux and Windows):
 
 install XQuartz
 Open XQuartz Preferences -> Security, check ‘Allow connections from network clients’
+
 type 
+
         xhost + 127.0.0.1
 
 
