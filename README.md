@@ -46,7 +46,7 @@ To build the containers:
  Open XQuartz Preferences -> Security, check ‘Allow connections from network clients’
  on a shell window, type 
 
-		xhost + 127.0.0.1
+    	    xhost + 127.0.0.1
 
   You'll need to pass the ip address of the host machine to the container when you run it.
   Depending on the OS, there are several ways to get the ip address:
