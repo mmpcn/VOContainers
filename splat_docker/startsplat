@@ -1,8 +1,12 @@
 #!/bin/sh
+
 echo "start splat-vo on $HOSTNAME"
 
-DISPLAY="host.docker.internal:0"
-export DISPLAY
+# host.docker.internal does not work for Linux - 
+# run docker with -e $DISPLAY=... instead
+#DISPLAY="host.docker.internal:0"
+#export DISPLAY
+
 SAMP_HUB="std-lockurl:file://localhost/root/.samp_${HOSTNAME}"
 export SAMP_HUB
 

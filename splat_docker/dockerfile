@@ -1,9 +1,12 @@
-FROM openjdk:8
-RUN apt-get update; apt-get -y install libxrender1 libxtst6 libxi6
+FROM openjdk:8-jre
 COPY . /usr/splat
 WORKDIR /usr/splat 
-RUN mkdir bin
-RUN wget -O /tmp/splat-vo-for-docker.tgz http://soft.g-vo.org/splat-beta/splat-vo-for-docker.tgz
-RUN tar xzf /tmp/splat-vo-for-docker.tgz 
-RUN rm /tmp/splat-vo-for-docker.tgz 
+RUN apt-get update; apt-get -y install libxrender1 libxtst6 libxi6 &&\
+    apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+RUN mkdir bin && \
+    wget -O /tmp/splat-vo-for-docker.tgz http://soft.g-vo.org/splat-beta/splat-vo-for-docker.tgz && \
+    tar xzf /tmp/splat-vo-for-docker.tgz && \
+    rm /tmp/splat-vo-for-docker.tgz 
 CMD ["/usr/splat/startsplat"]

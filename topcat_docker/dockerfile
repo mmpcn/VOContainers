@@ -1,9 +1,12 @@
-FROM openjdk:8
-RUN apt-get update; apt-get -y install libxrender1 libxtst6 libxi6
+FROM openjdk:8-jre
 COPY . /usr/topcat
 WORKDIR /usr/topcat 
-RUN mkdir bin
-RUN wget -O bin/topcat-full.jar http://www.star.bris.ac.uk/~mbt/topcat/topcat-full.jar
-RUN wget -O bin/topcat http://www.star.bris.ac.uk/~mbt/topcat/topcat
-RUN chmod +x bin/topcat
+RUN apt-get update; apt-get -y install libxrender1 libxtst6 libxi6 &&\
+    apt-get autoremove -y &&\
+    apt-get clean &&\
+    rm -rf /var/lib/apt/lists/*
+RUN mkdir bin &&\
+    wget -O bin/topcat-full.jar http://www.star.bris.ac.uk/~mbt/topcat/topcat-full.jar &&\
+    wget -O bin/topcat http://www.star.bris.ac.uk/~mbt/topcat/topcat &&\
+    chmod +x bin/topcat
 CMD ["/usr/topcat/starttopcat"]
