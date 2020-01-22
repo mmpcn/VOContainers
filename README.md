@@ -33,36 +33,41 @@ To build the containers:
 
 * To be able to access files from and save to the host machine (config, datafiles to open, ...)
 
+  create/choose a local directory that will be mounted by the docker container
+
 	mkdir <path-to-common-directory>
 
-put data you want to access there; from the container, save data in /root/
+  put data you want to access there; from the container, save data in /root/
 
 
 * To make the GUI run:
-in a MacOs machine, you need to install a X server (XQuartz)
-install XQuartz
-Open XQuartz Preferences -> Security, check ‘Allow connections from network clients’
-on a shell window, type 
+
+   * in a MacOs machine, you need to install a X server (XQuartz)
+ Open XQuartz Preferences -> Security, check ‘Allow connections from network clients’
+ on a shell window, type 
+
         xhost + 127.0.0.1
-You'll need to pass the ip address of the host machine to the container when you run it.
-Depending on the OS, there are several ways to get the ip address:
 
-MAC: HOST_IP=$(ipconfig getifaddr en0)
-LINUX: HOST_IP=$(hostname -I | awk '{print $1}')
-WINDOW: ??
+  You'll need to pass the ip address of the host machine to the container when you run it.
+  Depending on the OS, there are several ways to get the ip address:
 
-How to run SPLAT, TOPCAT in Docker:
+	MAC: HOST_IP=$(ipconfig getifaddr en0)
 
-To communicate using SAMP, they need to be in the same network (needs to be done only once):
+	LINUX: HOST_IP=$(hostname -I | awk '{print $1}')
+
+	WINDOWS: ??
+
+
+* To communicate using SAMP, they need to be in the same network (needs to be done only once):
 
 	docker network create samp-network
 
-Run SPLAT, TOPCAT in this network
+* Run SPLAT, TOPCAT in the samp-network:
 
 	docker run -v <path-to-common-directory>:/root  -e DISPLAY=$HOST_IP:0  --network samp-network -t splat
 
 	docker run -v <path-to-common-directory>:/root  -e DISPLAY=$HOST_IP:0  --network samp-network -t topcat
 
- Run sampbridge container in same network (it has to be started after Topcat and SPLAT):
+* Run sampbridge container in same network (it has to be started after Topcat and SPLAT):
 
 	docker run -v <path-to-common-directory>:/root --network samp-network -t sampbridge
